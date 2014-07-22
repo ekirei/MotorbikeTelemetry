@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quadrupapps.motorbiketelemetrty.MBTMainActivity$PlaceholderFragment" 
+    android:id="@+id/mainLayout">
+
+    <com.quadrupapps.motorbiketelemetrty.views.RecorderPreview
+        android:layout_width="fill_parent"        
+		android:layout_height="fill_parent"/>
+    
+    
+<!--     <ImageView -->
+<!--         android:id="@+id/imageView1" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:layout_alignParentLeft="true" -->
+<!--         android:layout_alignParentTop="true" -->
+<!--         android:src="@drawable/metal_texture" -->
+<!--         android:scaleType="fitXY" /> -->
+
+    <com.quadrupapps.motorbiketelemetrty.views.AngleIndicator 
+        android:id="@+id/angle"
+        android:layout_width="wrap_content"        
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"/>
+
+    <ImageButton
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:src="@android:drawable/ic_menu_add"
+        android:onClick="startPressed" />
+
+    <ImageButton
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startButton"
+        android:layout_centerHorizontal="true"
+        android:src="@android:drawable/ic_media_pause"
+        android:onClick="stopPressed" />
+
+    <TextView
+        android:id="@+id/recordingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/stopButton"
+        android:layout_below="@+id/stopButton"
+        android:layout_marginTop="18dp"
+        android:textColor="#00cc00"
+        android:text="" />
+
+</RelativeLayout>
