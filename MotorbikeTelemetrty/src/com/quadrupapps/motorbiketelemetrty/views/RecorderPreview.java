@@ -1,11 +1,14 @@
 package com.quadrupapps.motorbiketelemetrty.views;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -16,45 +19,53 @@ public class RecorderPreview extends SurfaceView implements SurfaceHolder.Callba
       SurfaceHolder holder;
       Camera mCamera;
 
+      Context mContext = null;
+      
+      
+      
       //Create constructor of Preview Class. In this, get an object of
       //surfaceHolder class by calling getHolder() method. After that add
       //callback to the surfaceHolder. The callback will inform when surface is
       //created/changed/destroyed. Also set surface not to have its own buffers.
 
-      public RecorderPreview(Context context,  AttributeSet attrs) {
-		 super(context);
+      public RecorderPreview(Context context, AttributeSet attrs) {
+		 super(context, attrs);
+		 mContext = context;
 	     recorder = new MediaRecorder();
 		 holder = getHolder();
 		 holder.addCallback(this);
 		 holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		 mCamera = Camera.open();
        }
 
+      
+      
+      
+      
       // Implement the methods of SurfaceHolder.Callback interface
 
       // SurfaceCreated : This method gets called when surface is created.
       // In this, initialize all parameters of MediaRecorder object as explained
       // above.
 
-      public void surfaceCreated(SurfaceHolder holder){
-    	  try {
-              mCamera.setPreviewDisplay(this.getHolder());
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-    	  
+      public void surfaceCreated(SurfaceHolder holder){    	  
 		  try{
-	           	recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-			   	recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+	           	recorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);	
+	           	recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+			   	recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);           	
+	           	recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 			   	recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-		    	recorder.setOutputFile("/sdcard/recordvideooutput.3gpp");
+		    	recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + "/" + "test.mpeg");
 		    	recorder.setPreviewDisplay(holder.getSurface());
 		    	recorder.prepare();
+		    	Log.i("surfaceCreated", "recorder prepared");
 		    } catch (Exception e) {
-		    	String message = e.getMessage();
+		    	Log.e("startRecording", e.toString());
 	      }
 	  }
 
+      
+      
+      
       public void surfaceDestroyed(SurfaceHolder holder) {
           if(recorder!=null){
         	  recorder.release();
@@ -62,15 +73,48 @@ public class RecorderPreview extends SurfaceView implements SurfaceHolder.Callba
           }
       }
 
+      
+      
+      
       //surfaceChanged : This method is called after the surface is created.
       public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-		  Camera.Parameters params = mCamera.getParameters();
-		  List<Camera.Size> sizes = params.getSupportedPreviewSizes();
-		  Camera.Size selected = sizes.get(0);
-		  params.setPreviewSize(selected.width,selected.height);
-		  mCamera.setParameters(params);
-		
-		  mCamera.startPreview();
+    	  
       }
+      
+      
+      
+      
+      public void startRecording(String filename){
+    	  try {
+    		  String filePath = mContext.getFilesDir() + "/" + filename;
+	    	  recorder.reset();
+	    	  recorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);	
+	     	  recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+		      recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);           	
+	     	  recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+		      recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+	    	  recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + "/" + filePath + ".mpeg");
+	    	  recorder.setPreviewDisplay(holder.getSurface());
+	    	  recorder.prepare();
+			  recorder.start();
+			  
+		   } catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+		   }
+       }
+      
+      
+      
+      
+      public void stopRecording(){
+    	  try {
+			recorder.stop();
+		} catch (Exception e) {
+			Log.e("","stoprecorder fail diomerda");
+		}
+      }
+      
+      
+      
       
 }

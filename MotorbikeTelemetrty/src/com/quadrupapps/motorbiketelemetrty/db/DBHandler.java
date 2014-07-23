@@ -141,7 +141,7 @@ public class DBHandler extends SQLiteOpenHelper {
 				value.setAccY(Float.parseFloat(cursor.getString(6)));
 				value.setAccZ(Float.parseFloat(cursor.getString(7)));
 				
-				Log.d("getAllContacts",cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3) + " " + cursor.getString(4) );
+				//Log.d("getAllContacts",cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3) + " " + cursor.getString(4) );
 				
 				// Adding contact to list
 				sensorValues.add(value);

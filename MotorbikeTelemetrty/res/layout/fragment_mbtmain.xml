@@ -2,10 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quadrupapps.motorbiketelemetrty.MBTMainActivity$PlaceholderFragment" 
+    tools:context="com.quadrupapps.motorbiketelemetrty.RecordingFragment" 
     android:id="@+id/mainLayout">
 
     <com.quadrupapps.motorbiketelemetrty.views.RecorderPreview
+        android:id="@+id/recorderPreview"
         android:layout_width="fill_parent"        
 		android:layout_height="fill_parent"/>
     

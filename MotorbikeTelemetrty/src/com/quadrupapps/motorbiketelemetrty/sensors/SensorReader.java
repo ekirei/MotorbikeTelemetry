@@ -80,8 +80,8 @@ public class SensorReader implements SensorEventListener{
 		        
 		        dataToSend = new float[6];
 		        dataToSend[0] =  azimut * (float)(180/Math.PI);
-		        dataToSend[1] =  roll * (float)(180/Math.PI);
-		        dataToSend[2] =  pitch * (float)(180/Math.PI);
+		        dataToSend[1] =  roll   * (float)(180/Math.PI);
+		        dataToSend[2] =  pitch  * (float)(180/Math.PI);
 		        dataToSend[3] =  mGravity[0];
 		        dataToSend[4] =  mGravity[1];
 		        dataToSend[5] =  mGravity[2];
